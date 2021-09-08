@@ -1,0 +1,33 @@
+<div class="col-12">
+    <kendo-grid #orderGrid
+      [pageable]="true"
+      [sortable]="true"
+      [filterable]="true"
+      [data]="dataServiceData | async"
+      [pageSize]="state.take"
+      [skip]="state.skip"
+      [sort]="state.sort"
+      [filter]="state.filter"
+      [loading]="dataService?.pendingData"
+      (dataStateChange)="dataStateChange($event)"
+    >
+    
+
+  
+      <kendo-grid-column
+      [field]="'ArticleId'"
+      [filterable]="true"
+      [filter]="'text'"
+      [sortable]="true"
+      [title]="'ArticleId'"
+    ></kendo-grid-column>
+    <kendo-grid-column
+    [field]="'NumberOfArticles'"
+    [filterable]="true"
+    [filter]="'numeric'"
+    [sortable]="true"
+    [title]="'NumberOfArticles'"
+  ></kendo-grid-column>
+    </kendo-grid>
+  </div>
+  

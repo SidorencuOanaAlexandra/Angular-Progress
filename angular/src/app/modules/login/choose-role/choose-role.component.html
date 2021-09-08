@@ -1,0 +1,11 @@
+<div *ngIf="!hasRole() && isLogged()">
+    <p>Choose a store</p>
+    <select [(ngModel)]="selectedRole" class="dropdown">
+        <option *ngFor="let role of userRoleList" value={{role.UserRoleId}}>
+            {{ stores(role.StoreId)?.Description }}
+            {{ roleTypes(role.RoleTypeId)?.Description }}
+        </option>
+     </select>
+     <button (click)="sendData()">Go</button>
+</div>
+

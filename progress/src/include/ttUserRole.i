@@ -1,0 +1,11 @@
+DEFINE TEMP-TABLE ttUserRole NO-UNDO
+    BEFORE-TABLE bttUserRole
+    FIELD UserRoleId AS CHARACTER 
+    FIELD RoleTypeId AS CHARACTER 
+    FIELD AppUserId  AS CHARACTER 
+    FIELD StoreId AS CHARACTER 
+    FIELD id        AS CHARACTER 
+    FIELD seq       AS INTEGER
+  
+    INDEX idxUserRoleId IS PRIMARY UNIQUE UserRoleId
+  .

@@ -1,0 +1,107 @@
+<div class="col-12">
+  <kendo-grid
+    #articleGrid
+    [resizable]="true"
+    style="width: 70%"
+    [pageable]="true"
+    [sortable]="true"
+    [selectable]="true"
+    [filterable]="true"
+    [data]="dataServiceData | async"
+    [pageSize]="state.take"
+    [skip]="state.skip"
+    [sort]="state.sort"
+    [filter]="state.filter"
+    [loading]="dataService?.pendingData"
+
+    (dataStateChange)="dataStateChange($event)"
+    (edit)="editHandler($event)"
+    (remove)="removeHandler($event)"
+    (add)="addHandler()"
+    (selectionChange)="gridUserSelectionChange(articleGrid, $event)"
+  >
+    <ng-template *ngIf="roleType === '1' || roleType === '2'" kendoGridToolbarTemplate>
+      <button kendoGridAddCommand>
+        <span class="k-icon k-i-add"></span>
+        Add new article
+      </button>
+    </ng-template>
+    <kendo-grid-column
+      [field]="'Model'"
+      [filterable]="true"
+      [filter]="'text'"
+      [sortable]="true"
+      [title]="'Model'"
+      [width]="40"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      [field]="'Manufacturer'"
+      [filterable]="true"
+      [filter]="'text'"
+      [sortable]="true"
+      [title]="'Manufacturer'"
+      [width]="40"
+    ></kendo-grid-column>
+    <kendo-grid-column field="ArticleTypeId" title="Type" [width]="40">
+      <ng-template kendoGridCellTemplate let-dataItem>
+            {{ articleType(dataItem.ArticleTypeId)?.Description }}
+          </ng-template>
+          <ng-template
+            kendoGridEditTemplate
+            let-dataItem="dataItem"
+            let-column="column"
+            let-formGroup="formGroup"
+          >
+        <kendo-dropdownlist
+          [defaultItem]="{ ArticleTypeId: '', Description: 'Choose a type' }"
+          [data]="articleTypeList"
+          textField="Description"
+          valueField="ArticleTypeId"
+          [valuePrimitive]="true"
+          [formControl]="formGroup.get('ArticleTypeId')"
+        >
+        </kendo-dropdownlist>
+      </ng-template>
+      <ng-template kendoGridFilterCellTemplate let-filter>
+          <dropdown-filter
+            [filter]="filter"
+            [data]="articleTypeList"
+            textField="Description"
+            valueField="ArticleTypeId"
+          >
+          </dropdown-filter>
+        </ng-template>
+    </kendo-grid-column>
+    <kendo-grid-command-column *ngIf="roleType === '1' || roleType === '2'" [width]="40">
+      <ng-template kendoGridCellTemplate>
+        <button kendoGridEditCommand>
+          <span class="k-icon k-i-edit"></span>Edit
+        </button>
+        <button kendoGridSaveCommand>
+          <span class="k-icon k-i-checkmark"></span>Save
+        </button>
+        <button kendoGridCancelCommand>
+          <span class="k-icon k-i-cancel"></span>Cancel
+        </button>
+        <button kendoGridRemoveCommand>
+          <span class="k-icon k-i-close"></span>Remove
+        </button>
+      </ng-template>
+    </kendo-grid-command-column>
+  </kendo-grid>
+</div>
+<kendo-grid-edit-form
+[model]="editDataItem"
+[isNew]="isNew"
+(save)="saveHandler($event)"
+(cancel)="cancelHandler()"
+[articleTypeList] = "articleTypeList"
+>
+</kendo-grid-edit-form>
+<div class="article-stock" *ngIf="currentArticle != ''">
+  <app-article-stock [ArticleId]="currentArticle"></app-article-stock>
+</div>
+<div class="article-type">
+  <app-article-type></app-article-type>
+</div>
+

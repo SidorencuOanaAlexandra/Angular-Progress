@@ -1,0 +1,16 @@
+.dropdown{
+    width:30%;
+    display: flex;
+    position: relative;
+}
+
+button{
+    background-color: rgb(190, 128, 240);
+    width: 70px;
+    border-radius: 10%;
+    margin-top: 5px
+}
+
+div {
+    margin: 20px;
+}

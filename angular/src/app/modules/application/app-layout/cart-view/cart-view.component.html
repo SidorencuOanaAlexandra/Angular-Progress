@@ -1,0 +1,25 @@
+<div class="articles" >
+    <div class="head article-view-cart">
+        <div class="poz">Sr.No</div>
+        <div> Product Image</div>
+        <div class="name">Product Name</div>
+        <div class="manufacturer">Manufacturer</div>
+        <div class="quantity">Quantity</div>
+        <div class="action">Action</div>
+    </div>
+    <div *ngFor="let article of articles; let i = index">
+            <div class="article-view-cart">
+                 <div class="poz">{{i+1}}</div>
+                 <img src="https://sportplay.ro/wp-content/uploads/2019/11/all-sports-1.png">
+                 <div class="name">{{article.Model}}</div>
+                 <div class="manufacturer">{{article.Manufacturer}}</div>
+                 <div class="quantity">{{article.quantity}}</div>
+                <div><button class="removeButton" (click)="removeFromCart(article)">Remove</button> </div>
+            </div>
+    
+    </div>
+  
+</div>
+<div class="articles" *ngIf="articles.length!=0">
+    
+</div>

@@ -1,0 +1,83 @@
+<div  class="col-12">
+    <kendo-grid #rentArticleGrid
+      [pageable]="true"
+      [sortable]="true"
+      [filterable]="true"
+      [data]="dataServiceData | async"
+      [pageSize]="state.take"
+      [skip]="state.skip"
+      [sort]="state.sort"
+      [filter]="state.filter"
+      [loading]="dataService?.pendingData"
+      (dataStateChange)="dataStateChange($event)"
+      (edit)="editHandler($event)"
+      (cancel)="cancelHandler($event)"
+      (save)="saveHandler($event)"
+      (remove)="removeHandler($event)"
+      (add)="addHandler($event)"
+    >
+      <ng-template *ngIf="RoleTypeId!='3'" kendoGridToolbarTemplate>
+        <button kendoGridAddCommand>
+          <span class="k-icon k-i-add"></span>
+        </button>
+      </ng-template>
+
+    <kendo-grid-column field="ArticleName" title="Article Name">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{ models(dataItem.ArticleId)?.Model }}
+      
+          </ng-template>
+          <ng-template
+            kendoGridEditTemplate
+            let-dataItem="dataItem"
+            let-column="column"
+            let-formGroup="formGroup"
+          >
+          <kendo-dropdownlist
+            [defaultItem]="{ ArticleId: '', Model: 'Choose a Article Name' }"
+            [data]="modelsList"
+            [valuePrimitive]="true"
+            textField="Model"
+            valueField="ArticleId"
+            [formControl]="formGroup.get('ArticleId')"
+         >
+         </kendo-dropdownlist>
+         </ng-template>
+      <ng-template kendoGridFilterCellTemplate let-filter>
+          <dropdown-filter-rent
+            [filter]="filter"
+            [data]="modelsList"
+            stringName="an article name"
+            textField="Model"
+            valueField="ArticleId"
+          >
+          </dropdown-filter-rent>
+        </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column
+      [field]="'NumberOfArticles'"
+      [filterable]="true"
+      [filter]="'numeric'"
+      [sortable]="true"
+      [title]="'NumberOfArticles'"
+    ></kendo-grid-column>
+    <kendo-grid-command-column *ngIf="RoleTypeId!='3'" [width]="220">
+      <ng-template kendoGridCellTemplate>
+          <button kendoGridEditCommand>
+            <span class="k-icon k-i-edit"></span>Edit
+          </button>
+          <button kendoGridSaveCommand>
+            <span class="k-icon k-i-checkmark"></span>Save
+          </button>
+          <button kendoGridCancelCommand>
+            <span class="k-icon k-i-cancel"></span>Cancel
+          </button>
+          <button kendoGridRemoveCommand>
+            <span class="k-icon k-i-close"></span>Remove
+          </button>
+        </ng-template>
+      </kendo-grid-command-column>
+    </kendo-grid>
+  </div>
+  

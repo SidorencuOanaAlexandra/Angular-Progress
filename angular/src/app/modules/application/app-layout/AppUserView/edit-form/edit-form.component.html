@@ -1,0 +1,45 @@
+<kendo-dialog *ngIf="active" [width]="300" [height]="450" (close)="closeForm()">
+    <kendo-dialog-titlebar>
+      {{ isNew ? "Add new user" : "Edit user" }}
+    </kendo-dialog-titlebar>
+  
+    <form novalidate class="k-form" [formGroup]="editForm">
+      <kendo-formfield>
+        <kendo-label [for]="Name" text="Name"></kendo-label>
+        <input formControlName="Name" kendoTextBox #Name required />
+  
+        <kendo-formhint>Type name</kendo-formhint>
+        <kendo-formerror>Error: Name is required</kendo-formerror>
+      </kendo-formfield>
+  
+      <kendo-formfield>
+        <kendo-label [for]="UserName" text="UserName"></kendo-label>
+        <input formControlName="UserName" kendoTextBox #UserName required />
+  
+        <kendo-formhint>Type username</kendo-formhint>
+        <kendo-formerror>Error: Username is required</kendo-formerror>
+      </kendo-formfield>
+  
+      <kendo-formfield>
+        <kendo-label [for]="Password" text="Password"></kendo-label>
+        <input formControlName="Password" kendoTextBox #Password required />
+  
+        <kendo-formhint>Type password</kendo-formhint>
+        <kendo-formerror>Error: Password is required</kendo-formerror>
+      </kendo-formfield>
+
+    </form>
+  
+    <kendo-dialog-actions>
+      <button class="k-button" (click)="onCancel($event)">Cancel</button>
+      <button
+        class="k-button k-primary"
+        [disabled]="!editForm.valid"
+        (click)="onSave($event)"
+      >
+        Save
+      </button>
+    </kendo-dialog-actions>
+    
+</kendo-dialog>
+  

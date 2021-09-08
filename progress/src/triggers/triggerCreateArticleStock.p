@@ -1,0 +1,2 @@
+TRIGGER PROCEDURE FOR CREATE OF ArticleStock.
+ASSIGN ArticleStock.ArticleStockId = GUID(GENERATE-UUID).

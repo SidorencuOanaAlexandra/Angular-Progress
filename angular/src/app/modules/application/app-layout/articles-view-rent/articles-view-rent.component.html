@@ -1,0 +1,21 @@
+<div class="articles">
+<div *ngFor="let article of articles">
+        <div class="article-view">
+            <div class="title">
+                {{article.Model | uppercase}}   
+            </div>
+            <div class="image">
+                 <img src="https://sportplay.ro/wp-content/uploads/2019/11/all-sports-1.png"/>
+            </div>
+            <div class="description">
+                Some description!
+                Manufacturer: {{article.Manufacturer}}
+            </div>
+            
+                <button (click)="addToCart(article)">Add To Cart</button>
+            
+            
+        </div>
+
+</div>
+</div>

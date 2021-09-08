@@ -1,0 +1,137 @@
+<div class="col-12">
+    <kendo-grid
+      #customerGrid
+      [pageable]="true"
+      [sortable]="true"
+      [selectable]="true"
+      [filterable]="true"
+      [data]="dataServiceData | async"
+      [pageSize]="state.take"
+      [skip]="state.skip"
+      [sort]="state.sort"
+      [filter]="state.filter"
+      [loading]="dataService?.pendingData"
+      (dataStateChange)="dataStateChange($event)"
+      (edit)="editHandler($event)"
+      (selectionChange)="gridUserSelectionChange(customerGrid, $event)"
+    >
+    <!-- (save)="saveHandler($event)" -->
+      <!-- <ng-template kendoGridToolbarTemplate>
+        <button kendoGridAddCommand>
+          <span class="k-icon k-i-add"></span>
+        </button>
+      </ng-template> -->
+      <kendo-grid-column
+        [field]="'seq'"
+        [filterable]="false"
+        [filter]="'numeric'"
+        [sortable]="false"
+        [title]="'Number'"
+      ></kendo-grid-column>
+      <!-- <kendo-grid-column
+        [field]="'AppUserId'"
+        [filterable]="false"
+        [filter]="'text'"
+        [sortable]="true"
+        [title]="'AppUserId'"
+      ></kendo-grid-column> -->
+      <!-- <kendo-grid-column field="Username" title="UserName">
+        <ng-template kendoGridCellTemplate let-dataItem>
+              {{ states(dataItem.AppUserId)?.Username }}
+            </ng-template>
+            <ng-template
+              kendoGridEditTemplate
+              let-dataItem="dataItem"
+              let-column="column"
+              let-formGroup="formGroup"
+            >
+          <kendo-dropdownlist
+            [defaultItem]="{ State: '', StateName: 'Choose a state' }"
+            [data]="usernameList"
+            textField="Username"
+            valueField="AppUserId"
+            [valuePrimitive]="true"
+            [formControl]="formGroup.get('AppUserId')"
+          > 
+          </kendo-dropdownlist>
+        </ng-template> -->
+        
+        <!-- <ng-template kendoGridFilterCellTemplate let-filter>
+            <state-dropdown-filter
+              [filter]="filter"
+              [data]="usernameList"
+              textField="UserName"
+              valueField="AppUserId"
+            >
+            </state-dropdown-filter>
+          </ng-template>
+      </kendo-grid-column> -->
+
+      <kendo-grid-column field="Adress" title="Adress">
+        <ng-template kendoGridCellTemplate let-dataItem>
+              {{ adresses(dataItem.StoreAgencyId)?.Adress }}
+            </ng-template>
+            <ng-template
+              kendoGridEditTemplate
+              let-dataItem="dataItem"
+              let-column="column"
+              let-formGroup="formGroup"
+            >
+          <kendo-dropdownlist
+            [defaultItem]="{ State: '', StateName: 'Choose a state' }"
+            [data]="adressList"
+            textField="Adress"
+            valueField="StoreAgencyId"
+            [valuePrimitive]="true"
+            [formControl]="formGroup.get('StoreAgencyId')"
+          >
+          </kendo-dropdownlist>
+        </ng-template>
+        <ng-template kendoGridFilterCellTemplate let-filter>
+            <app-dropdownlist-adress
+              [filter]="filter"
+              [data]="adressList"
+              textField="Adress"
+              valueField="StoreAgencyId"
+            >
+            </app-dropdownlist-adress>
+          </ng-template>
+      </kendo-grid-column>
+      <kendo-grid-column
+        [field]="'StoreAgencyId'"
+        [filterable]="true"
+        [filter]="'text'"
+        [sortable]="true"
+        [title]="'StoreAgencyId'"
+      ></kendo-grid-column>
+      <kendo-grid-column
+            [field]="'DateFrom'"
+            [format]="'yyyy/MM/dd'"
+            [filterable]="true"
+            [filter]="'date'"
+            [sortable]="true"
+            [title]="'DateFrom'"
+          ></kendo-grid-column>
+          <kendo-grid-column
+          [field]="'DateTo'"
+          [format]="'yyyy/MM/dd'"
+          [filterable]="true"
+          [filter]="'date'"
+          [sortable]="true"
+          [title]="'DateTo'"
+        ></kendo-grid-column>
+      <kendo-grid-column
+        [field]="'RentStatus'"
+        [filterable]="true"
+        [filter]="'numeric'"
+        [sortable]="true"
+        [title]="'Status'"
+      ></kendo-grid-column>
+    
+    </kendo-grid>
+  </div>
+
+<div *ngIf="currentRent != ''">
+    <app-rent-article-app-user-view [RentId]="currentRent"> </app-rent-article-app-user-view>
+</div>
+  

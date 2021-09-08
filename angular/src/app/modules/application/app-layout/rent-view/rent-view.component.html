@@ -1,0 +1,148 @@
+<div >
+<div class="col-12">
+  <kendo-grid
+    #RentGrid
+    [pageable]="true"
+    [sortable]="true"
+    [selectable]="true"
+    [filterable]="true"
+    [data]="dataServiceData | async"
+    [pageSize]="state.take"
+    [skip]="state.skip"
+    [sort]="state.sort"
+    [filter]="state.filter"
+    [loading]="dataService?.pendingData"
+
+    kendoGridSelectBy = "RentId"
+    [selectedKeys] = "myselection"
+    
+    (dataStateChange)="dataStateChange($event)"
+    (getComboA) = "getComboA($event)"
+    (edit)="editHandler($event)"
+    (remove)="removeHandler($event)"
+    (add)="addHandler()"
+    (selectionChange)="gridUserSelectionChange(RentGrid, $event)"
+  >
+
+  <kendo-grid-column field="UserName" title="UserName">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{ usernames(dataItem.AppUserId)?.UserName }}
+      
+          </ng-template>
+          <ng-template
+            kendoGridEditTemplate
+            let-dataItem="dataItem"
+            let-column="column"
+            let-formGroup="formGroup"
+          >
+          <kendo-dropdownlist
+            [defaultItem]="{ AppUserId: '', UserName: 'Choose a UserName' }"
+            [data]="usernameList"
+            [valuePrimitive]="true"
+            textField="UserName"
+            valueField="AppUserId"
+            [formControl]="formGroup.get('AppUserId')"
+         >
+         </kendo-dropdownlist>
+         </ng-template>
+      <ng-template kendoGridFilterCellTemplate let-filter>
+          <dropdown-filter-rent
+            [filter]="filter"
+            [data]="usernameList"
+            stringName="an username"
+            textField="UserName"
+            valueField="AppUserId"
+          >
+          </dropdown-filter-rent>
+        </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column field="Adress" title="Adress">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{ adresses(dataItem.StoreAgencyId)?.Address }}
+      
+          </ng-template>
+          <ng-template
+            kendoGridEditTemplate
+            let-dataItem="dataItem"
+            let-column="column"
+            let-formGroup="formGroup"
+          >
+          <kendo-dropdownlist
+            [defaultItem]="{ StoreAgencyId: '', Address: 'Choose a address' }"
+            [data]="adressList"
+            [valuePrimitive]="true"
+            textField="Address"
+            valueField="StoreAgencyId"
+            [formControl]="formGroup.get('StoreAgencyId')"
+         >
+         </kendo-dropdownlist>
+         </ng-template>
+      <ng-template kendoGridFilterCellTemplate let-filter>
+          <dropdown-filter-rent
+            [filter]="filter"
+            [data]="adressList"
+            stringName="an address"
+            textField="Address"
+            valueField="StoreAgencyId"
+          >
+          </dropdown-filter-rent>
+        </ng-template>
+    </kendo-grid-column>
+              
+    <kendo-grid-column
+      [field]="'DateFrom'"
+      [format]="'yyyy/MM/dd'"
+      [filterable]="true"
+      [filter]="'date'"
+      [sortable]="true"
+      [title]="'DateFrom'"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      [field]="'DateTo'"
+      [format]="'yyyy/MM/dd'"
+      [filterable]="true"
+      [filter]="'date'"
+      [sortable]="true"
+      [title]="'DateTo'"
+    ></kendo-grid-column>
+    <kendo-grid-column
+      [field]="'RentStatus'"
+      [filterable]="true"
+      [filter]="'numeric'"
+      [sortable]="true"
+      [title]="'Status'"
+    ></kendo-grid-column>
+    <kendo-grid-command-column *ngIf="RoleUser!='3'" [width]="220">
+      <ng-template kendoGridCellTemplate>
+        <button kendoGridEditCommand>
+          <span class="k-icon k-i-edit"></span>Edit
+        </button>
+        <button kendoGridSaveCommand>
+          <span class="k-icon k-i-checkmark"></span>Save
+        </button>
+        <button kendoGridCancelCommand>
+          <span class="k-icon k-i-cancel"></span>Cancel
+        </button>
+        <button kendoGridRemoveCommand>
+          <span class="k-icon k-i-close"></span>Remove
+        </button>
+      </ng-template>
+    </kendo-grid-command-column>
+  </kendo-grid>
+</div>
+<app-edit-form-rent *ngIf="RoleUser!='3'"
+[model]="editDataItem"
+[isNew]="isNew"
+(save)="saveHandler($event)"
+(cancel)="cancelHandler()"
+[addressList]="adressList"
+
+>
+</app-edit-form-rent> 
+ <div *ngIf="currentRent!=''">
+  <app-rent-article-view [RentId]="currentRent" [RoleTypeId]="RoleUser"> </app-rent-article-view>
+</div>
+
+</div>
+

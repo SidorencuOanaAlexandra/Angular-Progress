@@ -1,0 +1,45 @@
+<kendo-dialog *ngIf="active" [width]="300" [height]="450" (close)="closeForm()">
+  <kendo-dialog-titlebar>
+    {{ isNew ? "Add new article" : "Edit article" }}
+  </kendo-dialog-titlebar>
+
+  <form novalidate class="k-form" [formGroup]="editForm">
+    <kendo-formfield>
+      <kendo-label [for]="Model" text="Model"></kendo-label>
+      <input formControlName="Model" kendoTextBox #Model required />
+      <kendo-formerror>Error: Model is required</kendo-formerror>
+    </kendo-formfield>
+
+    <kendo-formfield>
+      <kendo-label [for]="Manufacturer" text="Manufacturer"></kendo-label>
+      <input formControlName="Manufacturer" kendoTextBox #Manufacturer required />
+      <kendo-formerror>Error: Manufacturer is required</kendo-formerror>
+    </kendo-formfield>
+
+    <kendo-formfield>
+      <kendo-label [for]="ArticleTypeId" text="Type"></kendo-label>
+      <kendo-dropdownlist
+        formControlName="ArticleTypeId"
+        kendoTextBox #ArticleTypeId required
+        [defaultItem]="{ ArticleTypeId: '', Description: 'Choose a type'}"
+        [data]="articleTypeList"
+        textField="Description"
+        valueField="ArticleTypeId"
+        [valuePrimitive]="true"
+      >
+      </kendo-dropdownlist>
+
+      <kendo-formerror>Error: Type is required</kendo-formerror>
+    </kendo-formfield>
+  </form>
+  <kendo-dialog-actions>
+    <button class="k-button" (click)="onCancel($event)">Cancel</button>
+    <button
+      class="k-button k-primary"
+      [disabled]="!editForm.valid"
+      (click)="onSave($event)"
+    >
+      Save
+    </button>
+  </kendo-dialog-actions>
+</kendo-dialog>
